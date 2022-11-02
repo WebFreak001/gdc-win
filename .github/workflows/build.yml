@@ -30,12 +30,26 @@ jobs:
             --build=x86_64-w64-mingw32 \
             --host=x86_64-w64-mingw32 \
             --target=x86_64-w64-mingw32 \
+            --disable-bootstrap \
+            --disable-werror \
             --disable-libssp \
+            --disable-libgomp \
+            --disable-libmudflap \
+            --disable-libquadmath \
+            --disable-libitm  \
+            --disable-libsanitizer \
+            --disable-libstdcxx-pch \
+            --with-arch=x86-64 \
             --with-gnu-as \
             --with-gnu-ld \
+            --with-gmp=/mingw64 \
+            --with-mpfr=/mingw64 \
+            --with-mpc=/mingw64 \
+            --with-isl=/mingw64 \
             --with-native-system-header-dir=/mingw64/x86_64-w64-mingw32/include \
             --libexecdir=/mingw64/lib \
             --enable-languages=d \
+            --enable-libphobos \
             --enable-shared \
             --enable-static \
             --disable-multilib
