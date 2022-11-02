@@ -10,7 +10,7 @@ jobs:
       run:
         shell: msys2 {0}
     env:
-      TARGET_VERSION: '12.2.0'
+      TARGET_VERSION: '11.2.0'
     steps:
       - uses: actions/checkout@v3
 
