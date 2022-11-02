@@ -5,10 +5,19 @@ on: [push, pull_request]
 jobs:
   build-release:
     name: Build GDC
-    runs-on: ubuntu-22.04
+    runs-on: windows-2022
+    defaults:
+      run:
+        shell: msys2 {0}
     env:
       TARGET_VERSION: '12.2.0'
     steps:
+      - uses: actions/checkout@v3
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          install: gcc make base-devel git
+
       - name: Install Dependencies
         run: |
           sudo apt install gdc gcc-mingw-w64 mingw-w64 -y
@@ -24,6 +33,7 @@ jobs:
           cd gcc-build
           ../gcc/configure \
             --prefix=/mingw64 \
+            --build=x86_64-w64-mingw32 \
             --host=x86_64-w64-mingw32 \
             --target=x86_64-w64-mingw32 \
             --disable-libssp \
@@ -46,18 +56,6 @@ jobs:
         with:
           name: gdc-${{env.TARGET_VERSION}}
           path: /mingw64
-
-  test-release:
-    name: Test Executables
-    runs-on: windows-latest
-    needs: build-release
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: gdc-${{env.TARGET_VERSION}}
-          path: gdc
 
       - name: Test Hello World
         run: .\gdc\gdc.exe -run test.d
