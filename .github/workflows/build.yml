@@ -21,9 +21,9 @@ jobs:
             make
             base-devel
             git
-            mingw-w64-gmp
-            mingw-w64-mpfr
-            mingw-w64-mpc
+            mingw-w64-x86_64-mpc
+            mingw-w64-x86_64-mpfr
+            mingw-w64-x86_64-mpc
 
       - name: Checkout GDC
         run: git clone --branch=releases/gcc-$TARGET_VERSION --depth=1 git://gcc.gnu.org/git/gcc.git
