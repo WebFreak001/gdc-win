@@ -16,7 +16,7 @@ jobs:
 
       - uses: msys2/setup-msys2@v2
         with:
-          install: gcc make base-devel git
+          install: gcc make base-devel git gmp mpfr mpc
 
       - name: Checkout GDC
         run: git clone --branch=releases/gcc-$TARGET_VERSION --depth=1 git://gcc.gnu.org/git/gcc.git
