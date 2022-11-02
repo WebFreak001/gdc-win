@@ -18,8 +18,8 @@ jobs:
         with:
           install: >-
             mingw-w64-x86_64-toolchain
-            make
-            base-devel
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-make
             git
             mingw-w64-x86_64-mpc
             mingw-w64-x86_64-mpfr
