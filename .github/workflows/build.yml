@@ -18,11 +18,6 @@ jobs:
         with:
           install: gcc make base-devel git
 
-      - name: Install Dependencies
-        run: |
-          sudo apt install gdc gcc-mingw-w64 mingw-w64 -y
-          gdc --version
-
       - name: Checkout GDC
         run: git clone --branch=releases/gcc-$TARGET_VERSION --depth=1 git://gcc.gnu.org/git/gcc.git
 
