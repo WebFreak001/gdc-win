@@ -33,7 +33,7 @@ jobs:
           mkdir gcc-build
           cd gcc-build
           ../gcc/configure \
-            --prefix=/mingw64 \
+            --prefix=/mingw64/gdc \
             --build=x86_64-w64-mingw32 \
             --host=x86_64-w64-mingw32 \
             --target=x86_64-w64-mingw32 \
@@ -53,7 +53,7 @@ jobs:
             --with-mpfr=/mingw64 \
             --with-mpc=/mingw64 \
             --with-isl=/mingw64 \
-            --with-native-system-header-dir=/mingw64/x86_64-w64-mingw32/include \
+            --with-native-system-header-dir=/mingw64/include \
             --libexecdir=/mingw64/lib \
             --enable-languages=d \
             --enable-libphobos \
@@ -70,7 +70,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: gdc-${{env.TARGET_VERSION}}
-          path: ${{env.RUNNER_TEMP}}/mingw64
+          path: ${{env.RUNNER_TEMP}}/mingw64/gdc
 
       - name: Test Hello World
         run: .\gdc\gdc.exe -run test.d
