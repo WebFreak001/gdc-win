@@ -21,6 +21,7 @@ jobs:
             mingw-w64-x86_64-gcc
             make
             git
+            base-devel
             mingw-w64-x86_64-mpc
             mingw-w64-x86_64-mpfr
             mingw-w64-x86_64-mpc
