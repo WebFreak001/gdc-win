@@ -23,7 +23,6 @@ jobs:
 
       - name: Configure
         run: |
-          cd gcc
           mkdir gcc-build
           cd gcc-build
           ../gcc/configure \
@@ -42,10 +41,10 @@ jobs:
             --disable-multilib
 
       - name: Build
-        run: cd gcc/gcc-build && make -j4
+        run: cd gcc-build && make -j4
 
       - name: Copy binaries / install
-        run: cd gcc/gcc-build && sudo make install
+        run: cd gcc-build && sudo make install
 
       - uses: actions/upload-artifact@v3
         with:
