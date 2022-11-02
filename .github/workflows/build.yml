@@ -1,10 +1,6 @@
-name: Run Unittests
-on:
-  push:
-    paths-ignore:
-    - "*.md"
-    - docs
-  pull_request:
+name: Build GDC
+
+on: [push, pull_request]
 
 jobs:
   build-release:
