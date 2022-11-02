@@ -11,9 +11,10 @@ jobs:
     steps:
       - name: Install Dependencies
         run: |
-          apt install gdc gcc-mingw-w64 mingw-w64 -y
+          sudo apt install gdc gcc-mingw-w64 mingw-w64 -y
           gdc --version
-
+          sudo mkdir /mingw64
+          sudo chown $(whoami) /mingw64
 
       - name: Checkout GDC
         run: git clone --branch=releases/gcc-$TARGET_VERSION --depth=1 git://gcc.gnu.org/git/gcc.git
