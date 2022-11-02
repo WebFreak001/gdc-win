@@ -1,0 +1,65 @@
+name: Run Unittests
+on:
+  push:
+    paths-ignore:
+    - "*.md"
+    - docs
+  pull_request:
+
+jobs:
+  build-release:
+    name: Build GDC
+    runs-on: ubuntu-22.04
+    env:
+      TARGET_VERSION: '12.2.0'
+    steps:
+      - name: Install Dependencies
+        run: |
+          apt install gdc gcc-mingw-w64 mingw-w64 -y
+          gdc --version
+
+
+      - name: Checkout GDC
+        run: git clone --branch=releases/gcc-$TARGET_VERSION --depth=1 git://gcc.gnu.org/git/gcc.git
+
+      - name: Configure
+        run: |
+          cd gcc
+          mkdir gcc-build
+          cd gcc-build
+          ../gcc/configure \
+            --prefix=/mingw64 \
+            --host=x86_64-w64-mingw32 \
+            --target=x86_64-w64-mingw32 \
+            --disable-libssp \
+            --with-gnu-as \
+            --with-gnu-ld \
+            --with-native-system-header-dir=/mingw64/x86_64-w64-mingw32/include \
+            --libexecdir=/mingw64/lib \
+            --enable-languages=d \
+            --enable-shared \
+            --enable-static \
+            --disable-multilib
+
+      - name: Build
+        run: make -j4
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: gdc-${{env.TARGET_VERSION}}
+          path: /mingw64
+
+  test-release:
+    name: Test Executables
+    runs-on: windows-latest
+    needs: build-release
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: gdc-${{env.TARGET_VERSION}}
+          path: gdc
+
+      - name: Test Hello World
+        run: .\gdc\gdc.exe -run test.d
